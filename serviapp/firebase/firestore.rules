@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /professionals/{professionalId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == professionalId;
+    }
+
+    match /chats/{chatId} {
+      allow read, write: if request.auth != null && request.auth.uid in resource.data.participants;
+    }
+
+    match /messages/{messageId} {
+      allow read, write: if request.auth != null && request.auth.uid in resource.data.participants;
+    }
+
+    match /jobs/{jobId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null && (
+        request.auth.uid == resource.data.clientId ||
+        request.auth.uid == resource.data.professionalId
+      );
+    }
+
+    match /transactions/{transactionId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == resource.data.clientId ||
+        request.auth.uid == resource.data.professionalId
+      );
+      allow write: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'custom';
+    }
+  }
+}
