@@ -104,20 +104,30 @@ La carpeta `firebase/` incluye:
    - Habilita `Push Notifications` y `Background Modes > Remote notifications` en `Runner`.
 4. Ejecuta la app en un dispositivo físico o emulador con Play Services y acepta el permiso para notificaciones.
 
+## Fase 4 (Optimización y Deploy)
+
+- `AppBootstrap` centraliza el manejo de errores (FlutterError, PlatformDispatcher, zonas) para mejorar la observabilidad en release.
+- Nuevos tests de unidad (`test/providers/chat_provider_test.dart`) y script de CI `./tool/ci.sh` que ejecuta format/analyze/test en un solo paso.
+- Documento `docs/RELEASE_CHECKLIST.md` con el checklist de publicación (Firebase, Android, iOS, metadatos).
+- README raíz actualizado con instrucciones de build/release y referencia al checklist.
+
 ## Próximos pasos sugeridos
 
 1. Integrar verificación de teléfono (Firebase Phone Auth) y validaciones adicionales para profesionales (cédula, referencias).
 2. Implementar Cloud Functions para `onChatMessage`, matching (`onJobCreated`) y webhooks (`onYappyWebhook`).
-3. Añadir chat en tiempo real (colecciones `chats` y `messages`) y la integración con Yappy para pagos.
+3. Añadir pasarela de pagos (Yappy) con reservas, comisiones y liberación de fondos.
 4. Completar el flujo de calificaciones y el sistema de matching con reglas de negocio (timeout 4h, top 5 profesionales, etc.).
 
 ## Scripts útiles
 
 | Acción | Comando |
 | --- | --- |
-| Formatear código | `flutter format lib` |
+| Formatear código | `flutter format lib test` |
 | Análisis estático | `flutter analyze` |
 | Ejecutar pruebas | `flutter test` |
+| CI local (formato + lint + tests) | `./tool/ci.sh` |
+
+Consulta `docs/RELEASE_CHECKLIST.md` antes de generar builds de producción.
 
 ---
 

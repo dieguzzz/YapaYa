@@ -31,4 +31,11 @@ Este repositorio contiene el MVP inicial para la plataforma que conecta clientes
 - Sincronización básica de tokens FCM mediante `PushNotificationService`, lista para conectar con Cloud Functions (`onChatMessage`) y FCM.
 - Actualizaciones en `firebase/firestore.rules`, documentación y navegación (`Mensajes`) para cubrir la fase de comunicación/notificaciones.
 
-Consulta `serviapp/README.md` para detalles de autenticación, estructura y próximos pasos del MVP.
+## Estado actual (Fase 4 - Optimización y Deploy)
+
+- `AppBootstrap` encapsula el manejo de errores (FlutterError, PlatformDispatcher, runZonedGuarded) para mejorar la estabilidad en release.
+- Script `serviapp/tool/ci.sh` para correr format + analyze + test en un solo paso.
+- Nuevos tests unitarios (`test/providers/chat_provider_test.dart`) para validar la lógica del chat.
+- Checklist de publicación en `serviapp/docs/RELEASE_CHECKLIST.md` con los pasos para Play Store / App Store.
+
+Consulta `serviapp/README.md` para detalles técnicos y próximos pasos del MVP.
