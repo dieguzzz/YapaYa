@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:serviapp/widgets/primary_button.dart';
 
 void main() {
-  testWidgets('PrimaryButton renders label and triggers callback', (tester) async {
+  testWidgets('PrimaryButton renders label and triggers callback',
+      (tester) async {
     var tapped = false;
 
     await tester.pumpWidget(
