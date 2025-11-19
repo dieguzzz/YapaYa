@@ -17,4 +17,12 @@ Este repositorio contiene el MVP inicial para la plataforma que conecta clientes
    - `flutterfire configure --project <tu-proyecto>` para generar `lib/firebase_options.dart`, `android/app/google-services.json` y `ios/Runner/GoogleService-Info.plist`.
 4. Lanza la app: `flutter run`.
 
-Consulta `serviapp/README.md` para detalles de autenticación, estructura y próximos pasos del MVP.*** End Patch
+## Estado actual (Fase 2)
+
+- Autenticación lista (email/contraseña) con `AuthProvider` y pantallas dedicadas.
+- Navegación principal con `NavigationBar` que ofrece resumen, publicación de trabajos, búsqueda de profesionales y edición de perfil.
+- Formularios funcionales para publicar trabajos (`JobProvider` + `JobService`) y para enviar información de verificación profesional (`ProfessionalProvider`).
+- Búsqueda básica de profesionales por categoría/zona (`ProfessionalSearchProvider` + Firestore).
+- Documentación, modelos y reglas de Firestore/Storage alineadas al esquema del MVP.
+
+Consulta `serviapp/README.md` para detalles de autenticación, estructura y próximos pasos del MVP.

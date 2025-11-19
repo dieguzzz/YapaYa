@@ -70,6 +70,19 @@ La carpeta `firebase/` incluye:
 - Provider gestiona los estados `unknown`, `authenticating`, `authenticated`, `unauthenticated` y `error`.
 - Pantallas iniciales (`LoginScreen`, `RegisterScreen`) listas para aplicar branding.
 
+## Fase 2 (Perfiles y Servicios)
+
+- `DashboardScreen`: resumen de usuario y listado de trabajos publicados (stream desde Firestore).
+- `CreateJobScreen`: formulario para publicar servicios con categoría, zona sugerida y presupuesto.
+- `ProfessionalsScreen`: búsqueda de profesionales verificados por categoría/zona usando `ProfessionalSearchProvider`.
+- `ProfileScreen`: captura/edición del perfil profesional (cédula, oficios, referencias, service areas) y muestra estado de verificación.
+- Providers nuevos:
+  - `JobProvider`: maneja publicaciones y escucha cambios de trabajos del cliente.
+  - `ProfessionalProvider`: sincroniza el documento del profesional en Firestore y gestiona envíos para verificación.
+  - `ProfessionalSearchProvider`: expone búsquedas con `ProfessionalService`.
+- Servicios nuevos: `JobService`, `ProfessionalService`, `CategoryService` y modelos (`JobRequest`, `ProfessionalProfile`, `ServiceCategory`).
+- Navegación principal: `HomeScreen` ahora es un `NavigationBar` con pestañas `Resumen`, `Publicar`, `Profesionales`, `Perfil`.
+
 ## Próximos pasos sugeridos
 
 1. Integrar verificación de teléfono (Firebase Phone Auth) y validaciones adicionales para profesionales (cédula, referencias).

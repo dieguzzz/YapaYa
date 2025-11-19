@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
+import 'providers/job_provider.dart';
+import 'providers/professional_provider.dart';
+import 'providers/professional_search_provider.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/splash/splash_screen.dart';
@@ -23,6 +26,19 @@ class ServiApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, JobProvider>(
+          create: (_) => JobProvider(),
+          update: (_, authProvider, jobProvider) =>
+              jobProvider!..attachUser(authProvider.currentUser?.id),
+        ),
+        ChangeNotifierProxyProvider<AuthProvider, ProfessionalProvider>(
+          create: (_) => ProfessionalProvider(),
+          update: (_, authProvider, professionalProvider) =>
+              professionalProvider!..attachUser(authProvider.currentUser?.id),
+        ),
+        ChangeNotifierProvider<ProfessionalSearchProvider>(
+          create: (_) => ProfessionalSearchProvider(),
         ),
       ],
       child: MaterialApp(
