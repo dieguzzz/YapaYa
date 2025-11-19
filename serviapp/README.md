@@ -83,10 +83,31 @@ La carpeta `firebase/` incluye:
 - Servicios nuevos: `JobService`, `ProfessionalService`, `CategoryService` y modelos (`JobRequest`, `ProfessionalProfile`, `ServiceCategory`).
 - Navegación principal: `HomeScreen` ahora es un `NavigationBar` con pestañas `Resumen`, `Publicar`, `Profesionales`, `Perfil`.
 
+## Fase 3 (Chat & Notificaciones)
+
+- `ChatProvider` + `ChatService`: manejo de hilos (`chats`) y mensajes (`messages`) con sincronización en tiempo real y marcado de leídos.
+- Pantallas nuevas:
+  - `ChatListScreen`: bandeja de conversaciones (nueva pestaña "Mensajes" en `HomeScreen`).
+  - `ChatRoomScreen`: conversación con input multiline, scroll y estados de envío.
+- Reglas de Firestore reforzadas para que solo los participantes lean/escriban chats y mensajes.
+- `PushNotificationService`: sincroniza el token FCM del usuario y lo almacena en `users/{uid}.messagingTokens` (preparado para Cloud Functions > FCM).
+- Punto de extensión para la función `onChatMessage`: al enviar un mensaje bastará con leer el token del receptor y disparar una notificación via FCM.
+
+### Configuración de FCM
+
+1. Activa Cloud Messaging en tu proyecto Firebase.
+2. Android:
+   - Asegúrate de tener `google-services.json` actualizado.
+   - En `android/app/src/main/AndroidManifest.xml` agrega permisos de notificación si es necesario (Android 13+).
+3. iOS:
+   - Añade el certificado APNs a Firebase.
+   - Habilita `Push Notifications` y `Background Modes > Remote notifications` en `Runner`.
+4. Ejecuta la app en un dispositivo físico o emulador con Play Services y acepta el permiso para notificaciones.
+
 ## Próximos pasos sugeridos
 
 1. Integrar verificación de teléfono (Firebase Phone Auth) y validaciones adicionales para profesionales (cédula, referencias).
-2. Implementar la publicación de servicios (`jobs`) y notificaciones push (Cloud Functions + FCM).
+2. Implementar Cloud Functions para `onChatMessage`, matching (`onJobCreated`) y webhooks (`onYappyWebhook`).
 3. Añadir chat en tiempo real (colecciones `chats` y `messages`) y la integración con Yappy para pagos.
 4. Completar el flujo de calificaciones y el sistema de matching con reglas de negocio (timeout 4h, top 5 profesionales, etc.).
 

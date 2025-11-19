@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/auth_provider.dart';
+import '../chat/chat_list_screen.dart';
 import 'dashboard_screen.dart';
 import '../jobs/create_job_screen.dart';
 import '../professionals/professionals_screen.dart';
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = const [
     DashboardScreen(),
+    ChatListScreen(),
     CreateJobScreen(),
     ProfessionalsScreen(),
     ProfileScreen(),
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<String> _titles = const [
     'Resumen',
+    'Mensajes',
     'Publicar',
     'Profesionales',
     'Perfil',
@@ -57,6 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.dashboard_outlined),
             selectedIcon: Icon(Icons.dashboard),
             label: 'Resumen',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline),
+            selectedIcon: Icon(Icons.chat_bubble),
+            label: 'Mensajes',
           ),
           NavigationDestination(
             icon: Icon(Icons.add_circle_outline),

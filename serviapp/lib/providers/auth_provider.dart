@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../models/app_user.dart';
 import '../services/auth_service.dart';
+import '../services/push_notification_service.dart';
 
 enum AuthStatus {
   unknown,
@@ -15,12 +16,17 @@ enum AuthStatus {
 }
 
 class AuthProvider extends ChangeNotifier {
-  AuthProvider({AuthService? authService})
-      : _authService = authService ?? AuthService() {
+  AuthProvider({
+    AuthService? authService,
+    PushNotificationService? notificationService,
+  })  : _authService = authService ?? AuthService(),
+        _notificationService =
+            notificationService ?? PushNotificationService() {
     _subscribeToAuthChanges();
   }
 
   final AuthService _authService;
+  final PushNotificationService _notificationService;
   late final StreamSubscription<User?> _authSubscription;
 
   AuthStatus _status = AuthStatus.unknown;
@@ -47,6 +53,7 @@ class AuthProvider extends ChangeNotifier {
         final profile = await _authService.fetchUserProfile(user.uid);
         _currentUser = profile;
         _errorMessage = null;
+        await _notificationService.syncUserToken(profile.id);
         _setStatus(AuthStatus.authenticated);
       } catch (e) {
         _currentUser = null;
@@ -68,6 +75,7 @@ class AuthProvider extends ChangeNotifier {
       );
       _currentUser = profile;
       _errorMessage = null;
+      await _notificationService.syncUserToken(profile.id);
       _setStatus(AuthStatus.authenticated);
     } on FirebaseAuthException catch (e) {
       _errorMessage = e.message;
@@ -96,6 +104,7 @@ class AuthProvider extends ChangeNotifier {
       );
       _currentUser = profile;
       _errorMessage = null;
+      await _notificationService.syncUserToken(profile.id);
       _setStatus(AuthStatus.authenticated);
     } on FirebaseAuthException catch (e) {
       _errorMessage = e.message;
